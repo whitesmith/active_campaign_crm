@@ -10,10 +10,11 @@ module ActiveCampaignCrm
       )
     end
 
-    def get(url)
+    def get(url, params={})
       response = @connection.get do |req|
         req.url url
         req.headers['Api-Token'] = ActiveCampaignCrm.configuration.api_key
+        req.params = params
       end
       JSON.parse response.body
     end

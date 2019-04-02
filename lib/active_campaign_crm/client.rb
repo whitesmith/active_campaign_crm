@@ -9,5 +9,6 @@ module ActiveCampaignCrm
     end
 
     include ActiveCampaignCrm::Client::Contacts
+    include ActiveCampaignCrm::Client::ContactFields
   end
 end

@@ -6,6 +6,11 @@ module ActiveCampaignCrm
         response = @connection.get('contacts', params)
         response['contacts']
       end
+
+      def contact(id)
+        response = @connection.get("contacts/#{id}")
+        response['contact']
+      end
     end
   end
 end

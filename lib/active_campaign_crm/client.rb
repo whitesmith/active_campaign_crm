@@ -12,5 +12,6 @@ module ActiveCampaignCrm
     include ActiveCampaignCrm::Client::ContactFields
     include ActiveCampaignCrm::Client::CustomFieldValues
     include ActiveCampaignCrm::Client::Tags
+    include ActiveCampaignCrm::Client::Organization
   end
 end

@@ -12,15 +12,18 @@ module ActiveCampaignCrm
       end
 
       def create_tag(fields)
-        @connection.post('tags', tag_body(fields))
+        response = @connection.post('tags', tag_body(fields))
+        response['tag']
       end
 
       def add_tag_to_contact(contact, tag)
-        @connection.post('contactTags', contact_link_tag_body(contact, tag))
+        response = @connection.post('contactTags', contact_link_tag_body(contact, tag))
+        response['contactTag']
       end
 
       def update_tag(id, fields)
-        @connection.put("tags/#{id}", tag_body(fields))
+        response = @connection.put("tags/#{id}", tag_body(fields))
+        response['tag']
       end
 
       def delete_tag(id)

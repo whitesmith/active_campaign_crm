@@ -12,11 +12,13 @@ module ActiveCampaignCrm
       end
 
       def create_custom_field_value(properties)
-        @connection.post('fieldValues', custom_field_value_body(properties))
+        response = @connection.post('fieldValues', custom_field_value_body(properties))
+        response['fieldValue']
       end
 
       def update_custom_field_value(id, properties)
-        @connection.put("fieldValues/#{id}", custom_field_value_body(properties))
+        response = @connection.put("fieldValues/#{id}", custom_field_value_body(properties))
+        response['fieldValue']
       end
 
       def delete_custom_field_value(id)

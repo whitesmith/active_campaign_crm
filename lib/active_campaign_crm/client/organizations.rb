@@ -12,11 +12,13 @@ module ActiveCampaignCrm
       end
 
       def create_organization(fields)
-        @connection.post('organizations', organization_body(fields))
+        response = @connection.post('organizations', organization_body(fields))
+        response['organization']
       end
 
       def update_organization(id, fields)
-        @connection.put("organizations/#{id}", organization_body(fields))
+        response = @connection.put("organizations/#{id}", organization_body(fields))
+        response['organization']
       end
 
       def delete_organization(id)

@@ -12,15 +12,18 @@ module ActiveCampaignCrm
       end
 
       def create_contact(fields)
-        @connection.post('contacts', contact_body(fields))
+        response = @connection.post('contacts', contact_body(fields))
+        response['contact']
       end
 
       def sync_contact(fields)
-        @connection.post('contact/sync', contact_body(fields))
+        response = @connection.post('contact/sync', contact_body(fields))
+        response['contact']
       end
 
       def update_contact(id, fields)
-        @connection.put("contacts/#{id}", contact_body(fields))
+        response = @connection.put("contacts/#{id}", contact_body(fields))
+        response['contact']
       end
 
       def delete_contact(id)

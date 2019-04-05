@@ -12,7 +12,8 @@ module ActiveCampaignCrm
       end
 
       def create_contact_field(properties)
-        @connection.post('fields', contact_field_body(properties))
+        response = @connection.post('fields', contact_field_body(properties))
+        response['field']
       end
 
       def contact_field_body(properties)
@@ -20,11 +21,12 @@ module ActiveCampaignCrm
       end
 
       def update_contact_field(id, properties)
-        @connection.put("fields/#{id}", contact_field_body(properties))
+        response = @connection.put("fields/#{id}", contact_field_body(properties))
+        response['field']
       end
 
       def delete_contact_field(id)
-        @connection.delete("fields/#{id}")
+        response = @connection.delete("fields/#{id}")
       end
     end
   end

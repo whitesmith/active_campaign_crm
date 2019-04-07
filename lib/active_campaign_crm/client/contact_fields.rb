@@ -16,6 +16,19 @@ module ActiveCampaignCrm
         response['field']
       end
 
+      def add_relationship_to_field(field, rel)
+        response = @connection.post('fieldRels', custom_rel_body(field, rel))
+        response['fieldRel']
+      end
+
+      def custom_rel_body(field, rel)
+        { 'fieldRel': {
+          'field': field,
+          'relid': rel
+          }
+        }.to_json
+      end
+
       def contact_field_body(properties)
         { 'field': properties }.to_json
       end

@@ -1,5 +1,6 @@
 module ActiveCampaignCrm
   class Client
+    #Contact Fields Interface
     module ContactFields
       def contact_fields(params = {})
         response = @connection.get('fields', params)

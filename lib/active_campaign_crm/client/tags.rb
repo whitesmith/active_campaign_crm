@@ -1,5 +1,6 @@
 module ActiveCampaignCrm
   class Client
+    # Tag Interface
     module Tags
       def tags(params = {})
         response = @connection.get('tags', params)

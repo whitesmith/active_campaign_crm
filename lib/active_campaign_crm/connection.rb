@@ -1,11 +1,10 @@
 module ActiveCampaignCrm
+  # Handles all connections with active campaign
   class Connection
     require 'faraday'
     require 'json'
     require 'active_campaign_crm/error'
     def initialize
-      # TODO: raise exception if account_url is not defined
-      # TODO: raise exception if api_key is not defined
       @connection = Faraday.new(
         url: "#{ActiveCampaignCrm.configuration.account_url}/api/3"
       )

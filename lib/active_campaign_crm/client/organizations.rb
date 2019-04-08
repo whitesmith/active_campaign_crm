@@ -1,5 +1,6 @@
 module ActiveCampaignCrm
   class Client
+    # Organization Interface
     module Organization
       def organizations(params = {})
         response = @connection.get('organizations', params)

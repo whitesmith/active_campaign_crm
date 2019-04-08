@@ -17,8 +17,16 @@ module ActiveCampaignCrm
         response['organization']
       end
 
+      def find_or_create_organization(name)
+        organizations = organizations("filters[name]": name)
+        return organizations[0] if organizations.any?
+
+        create_organization(name: name)
+      end
+
       def update_organization(id, fields)
-        response = @connection.put("organizations/#{id}", organization_body(fields))
+        response = @connection.put("organizations/#{id}",
+                                   organization_body(fields))
         response['organization']
       end
 

@@ -17,6 +17,22 @@ module ActiveCampaignCrm
         response['field']
       end
 
+      def find_or_create_contact_field(perstag, properties)
+        fields = contact_fields("filters[perstag]": perstag)
+        return fields[0] if fields.any?
+
+        create_contact_field(properties)
+      end
+
+      def find_or_create_field_with_relationship(perstag, properties, rel)
+        fields = contact_fields("filters[perstag]": perstag)
+        return fields[0] if fields.any?
+
+        field = create_contact_field(properties)
+        add_relationship_to_field(field['id'], rel)
+        field
+      end
+
       def add_relationship_to_field(field, rel)
         response = @connection.post('fieldRels', custom_rel_body(field, rel))
         response['fieldRel']

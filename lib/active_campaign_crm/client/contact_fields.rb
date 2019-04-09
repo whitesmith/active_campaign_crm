@@ -15,6 +15,7 @@ module ActiveCampaignCrm
       def create_contact_field(properties)
         response = @connection.post('fields', contact_field_body(properties))
         field = response['field']
+        perstag = field['perstag']
         ActiveCampaignCrm.cache[:contact_fields][perstag] = field['id']
         response['field']
       end

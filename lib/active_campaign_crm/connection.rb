@@ -48,7 +48,7 @@ module ActiveCampaignCrm
     def handle_response(response)
       return JSON.parse response.body if response.success?
 
-      errors = JSON.parse(response.body)['errors']
+      errors = JSON.parse(response.body)['errors'] unless response.body.empty?
       error_messages = errors.map { |error| error['title'] } unless errors.nil?
       error_message = error_messages.join('-') unless error_messages.nil?
 

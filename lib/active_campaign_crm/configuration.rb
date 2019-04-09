@@ -1,10 +1,15 @@
 module ActiveCampaignCrm
   class << self
     attr_accessor :configuration
+    attr_accessor :cache
   end
 
   def self.configure
     self.configuration ||= Configuration.new
+    self.cache = {
+      "contact_fields": {},
+      "tags": {}
+    }
     yield(configuration)
   end
 

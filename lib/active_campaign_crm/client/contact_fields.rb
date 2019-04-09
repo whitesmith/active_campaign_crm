@@ -1,6 +1,6 @@
 module ActiveCampaignCrm
   class Client
-    #Contact Fields Interface
+    # Contact Fields Interface
     module ContactFields
       def contact_fields(params = {})
         response = @connection.get('fields', params)
@@ -14,19 +14,31 @@ module ActiveCampaignCrm
 
       def create_contact_field(properties)
         response = @connection.post('fields', contact_field_body(properties))
+        field = response['field']
+        ActiveCampaignCrm.cache[:contact_fields][perstag] = field['id']
         response['field']
+      end
+
+      def cached_contact_field_id(perstag)
+        ActiveCampaignCrm.cache.dig(:contact_fields, perstag)
       end
 
       def find_or_create_contact_field(perstag, properties)
         fields = contact_fields("filters[perstag]": perstag)
-        return fields[0] if fields.any?
+        if fields.any?
+          ActiveCampaignCrm.cache[:contact_fields][perstag] = fields[0]['id']
+          return fields[0]
+        end
 
         create_contact_field(properties)
       end
 
       def find_or_create_field_with_relationship(perstag, properties, rel)
         fields = contact_fields("filters[perstag]": perstag)
-        return fields[0] if fields.any?
+        if fields.any?
+          ActiveCampaignCrm.cache[:contact_fields][perstag] = fields[0]['id']
+          return fields[0]
+        end
 
         field = create_contact_field(properties)
         add_relationship_to_field(field['id'], rel)

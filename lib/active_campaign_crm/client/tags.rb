@@ -14,13 +14,22 @@ module ActiveCampaignCrm
 
       def create_tag(fields)
         response = @connection.post('tags', tag_body(fields))
+        tag_name = response['tag']['tag']
+        ActiveCampaignCrm.cache[:tags][tag_name] = response['tag']['id']
         response['tag']
+      end
+
+      def cached_tag_id(tag)
+        ActiveCampaignCrm.cache.dig(:tags, tag)
       end
 
       def sync_tag(tag, type, description)
         query = { 'filters[tag]': tag }
         tags = tags(query)
-        return tags[0] if tags.any?
+        if tags.any?
+          ActiveCampaignCrm.cache[:tags][tag] = tags[0]['id']
+          return tags[0]
+        end
 
         create_tag(tag: tag, tagType: type, description: description)
       end
